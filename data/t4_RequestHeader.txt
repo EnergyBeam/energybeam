@@ -1,0 +1,10 @@
+GET /dashboard/ HTTP/1.1
+Host: localhost:23232
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://localhost:23232/tickets/
+Cookie: csrftoken=zhBaNrV7w6v8GeJ1FwJmplZIhEarvidOEYF7HY0lmrJ2nxP0HOsXKL88XVIoZ27t; sessionid=szkorh53qozu9vkcgzbyxnnn0eq7h1m8
+Connection: keep-alive
+

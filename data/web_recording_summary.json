@@ -1,0 +1,151 @@
+{
+  "FilterHeaders": [
+    {
+      "Header": "user-agent",
+      "IncludeInScript": false
+    },
+    {
+      "Header": "accept-language",
+      "IncludeInScript": false
+    },
+    {
+      "Header": "accept-encoding",
+      "IncludeInScript": false
+    },
+    {
+      "Header": "accept",
+      "IncludeInScript": false
+    }
+  ],
+  "FilterResources": [
+    {
+      "IsNonResource": true,
+      "type": "text/html"
+    }
+  ],
+  "GeneralInfo": {
+    "BrowserVersion": "",
+    "MaxUsedConnections": 1,
+    "RecordedBrowser": "Firefox",
+    "RecordingDate": "дек-16-2022",
+    "RecordingDuration": 154484,
+    "RecordingTimeStamp": 1671201059,
+    "TotalBytesReceived": 134669,
+    "TotalBytesSent": 4484,
+    "TotalRequests": 10
+  },
+  "HostInfo": [
+    {
+      "DomainName": "localhost",
+      "Domains": [
+        {
+          "HTTPVersion": "HTTP/1.1",
+          "IP": "[::1]",
+          "IncludeInScript": true,
+          "Name": "localhost",
+          "Port": 23232,
+          "Requests": [
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 47,
+              "EventId": 156,
+              "HttpStatus": 200,
+              "Size": 12107,
+              "URL": "http://localhost:23232/"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 16,
+              "EventId": 153,
+              "HttpStatus": 302,
+              "Size": 0,
+              "URL": "http://localhost:23232/logout/"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 109,
+              "EventId": 146,
+              "HttpStatus": 200,
+              "Size": 46101,
+              "URL": "http://localhost:23232/dashboard/"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 78,
+              "EventId": 115,
+              "HttpStatus": 200,
+              "Size": 33068,
+              "URL": "http://localhost:23232/tickets/"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 15,
+              "EventId": 112,
+              "HttpStatus": 302,
+              "Size": 0,
+              "URL": "http://localhost:23232/"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 203,
+              "EventId": 109,
+              "HttpStatus": 302,
+              "Size": 0,
+              "URL": "http://localhost:23232/login/"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 16,
+              "EventId": 101,
+              "HttpStatus": 200,
+              "Size": 6064,
+              "URL": "http://localhost:23232/login/?next=/"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 31,
+              "EventId": 87,
+              "HttpStatus": 404,
+              "Size": 12611,
+              "URL": "http://localhost:23232/favicon.ico"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 31,
+              "EventId": 84,
+              "HttpStatus": 404,
+              "Size": 12611,
+              "URL": "http://localhost:23232/favicon.ico"
+            },
+            {
+              "CompressionType": "",
+              "DataType": "text/html",
+              "DownloadTime": 63,
+              "EventId": 66,
+              "HttpStatus": 200,
+              "Size": 12107,
+              "URL": "http://localhost:23232/"
+            }
+          ],
+          "SSLCipher": "None",
+          "SSLVersion": "None"
+        }
+      ],
+      "IncludeInScript": true
+    }
+  ],
+  "WebSocket": {
+    "IncludeInScript": false,
+    "IsScriptIncludeWebSocket": false
+  },
+  "NumberOfCorrelations": 0
+}

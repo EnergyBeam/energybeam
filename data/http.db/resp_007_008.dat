@@ -1,0 +1,893 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    
+
+
+
+
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Helpdesk :: Powered by django-helpdesk</title>
+
+
+<!-- Bootstrap Core CSS -->
+
+<link href="/static/helpdesk/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+<!-- Font Awesome -->
+<link href="/static/helpdesk/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+<!-- DataTables CSS-->
+<link href="/static/helpdesk/vendor/datatables/css/dataTables.bootstrap4.css" rel="stylesheet">
+<link href="/static/helpdesk/vendor/datatables/css/buttons.dataTables.css" rel="stylesheet">
+
+<!-- MetisMenu CSS -->
+<link href="/static/helpdesk/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+<!-- Morris Charts CSS -->
+
+<link href="/static/helpdesk/vendor/morrisjs/morris.css" rel="stylesheet">
+
+
+<!-- Custom CSS -->
+<link href="/static/helpdesk/css/sb-admin.css" rel="stylesheet">
+<link rel='stylesheet' href='/static/helpdesk/helpdesk-extend.css' type='text/css'  media="screen" >
+
+
+<!-- RSS -->
+<link rel='alternate' href='/rss/user/admin/' type='application/rss+xml' title='My Open Tickets' />
+<link rel='alternate' href='/rss/recent_activity/' type='application/rss+xml' title='All Recent Activity' />
+<link rel='alternate' href='/rss/unassigned/' type='application/rss+xml' title='Unassigned Tickets' />
+
+<style type="text/css">
+/* hide google translate top bar */
+.goog-te-banner-frame {display: none !important;}
+.goog-te-balloon-frame {display: none !important;}
+/* hide google translate tooltips (generated for every translated item) */
+.goog-tooltip {display: none !important; }
+</style>
+
+<style type="text/css">
+/* header */
+#dropdown li.headerlink { width: auto; float: left; text-align: center; }
+
+/* query list */
+#dropdown li.headerlink ul {    display: none;
+                                text-align: left;
+                                position: absolute;
+                                padding: 5px;
+                                z-index: 2; }
+/* query entries */
+#dropdown li.headerlink:hover ul { display: block; width: auto; }
+#dropdown li.headerlink:hover ul li { padding: 5px; margin: 1px; float: none; display: block; }
+</style>
+
+
+
+
+    
+    
+<!-- jQuery and Bootstrap Core -->
+
+<script src="/static/helpdesk/vendor/jquery/jquery.min.js"></script>
+<script src="/static/helpdesk/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+<!-- Core plugin JavaScript-->
+<script src="/static/helpdesk/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Page level plugin JavaScript-->
+<script src="/static/helpdesk/vendor/chart.js/Chart.min.js"></script>
+<script src="/static/helpdesk/vendor/datatables/js/jquery.dataTables.js"></script>
+<script src="/static/helpdesk/vendor/datatables/js/dataTables.bootstrap4.js"></script>
+<script src="/static/helpdesk/vendor/datatables/js/dataTables.buttons.js"></script>
+<script src="/static/helpdesk/vendor/datatables/js/buttons.colVis.js"></script>
+
+<!-- jQuery UI DatePicker -->
+<script src='/static/helpdesk/vendor/jquery-ui/jquery-ui.min.js' type='text/javascript' language='javascript'></script>
+<link href="/static/helpdesk/vendor/jquery-ui/jquery-ui.css" rel="stylesheet">
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/static/helpdesk/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/static/helpdesk/js/sb-admin.js"></script>
+
+
+
+
+
+</head>
+
+<body id="bg-dark">
+
+    
+
+    
+
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+
+      <a class="navbar-brand" href="/">Helpdesk</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0 mr-auto" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      
+      <!-- Navbar Search -->
+      <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" id='searchform' method='get' action="/tickets/">
+        <div class="input-group">
+          <input type="text" class="form-control" name='q' size='15' placeholder='Search...' id='search_query' title='Enter a keyword, or a ticket number to jump straight to that ticket.' aria-label="Search" aria-describedby="basic-addon2">
+          <input type='hidden' name='status' value='1' /><input type='hidden' name='status' value='2' /><input type='hidden' name='status' value='3' /><input type='hidden' name='search_type' value='header' />
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+              <i class="fas fa-search"></i> Go
+            </button>
+          </div>
+        </div>
+        <input type="hidden" name="csrfmiddlewaretoken" value="Vr5MXMMh9TwVhXGsDJqflSbN3yqcIJ4r089JRjRvZeKPYgMrF19QGikdJPY9ctY6">
+      </form>
+      
+      <!-- Navbar -->
+      <ul class="navbar-nav mr-md-0">
+      
+        
+        <li class="nav-item dropdown no-arrow">
+          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle fa-fw"></i>
+            admin
+            <i class="fas fa-caret-down fa-fw"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="/settings/"><i class="fas fa-fw fa-user-cog"></i> User Settings</a>
+            <a class="dropdown-item" href='/rss/'><i class="fas fa-fw fa-rss-square"></i> RSS Feeds</a>
+            
+            <a class="dropdown-item" href="/password_change/"><i class="fas fa-fw fa-user-secret"></i> Change password</a>
+            
+            <div class="dropdown-divider"></div>
+            
+            <a class="dropdown-item" href='/system_settings/'><i class="fas fa-fw fa-cogs"></i> System Settings</a>
+            <div class="dropdown-divider"></div>
+            
+            <a class="dropdown-item" href="/logout/"><i class="fas fa-fw fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </li>
+      
+      </ul>
+
+    </nav>
+
+
+    <div id="wrapper">
+        
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+    
+        <li class="nav-item active">
+          <a class="nav-link" href="/dashboard/">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tickets/">
+            <i class="fas fa-fw fa-tasks"></i>
+            <span>All Tickets</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ticketsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-search"></i>
+            <span>Saved Queries</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="ticketsDropdown">
+            
+            <p class="dropdown-item small text-wrap">No saved queries currently available. You can create one in the All Tickets page.</p>
+            
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tickets/submit/">
+            <i class="fas fa-fw fa-plus-circle"></i>
+            <span>New Ticket</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/reports/">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Reports</span>
+          </a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/kb/">
+            <i class="fas fa-fw fa-database"></i>
+            <span>Knowledgebase</span>
+          </a>
+        </li>
+        
+    
+    </ul>
+
+
+        <div id="content-wrapper">
+        
+            <div class="container-fluid">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    
+<li class="breadcrumb-item">
+    <a href="#">Dashboard</a>
+</li>
+<li class="breadcrumb-item active">Overview</li>
+
+                </ol>
+            
+                
+
+<div class="row">
+    <div class="col-sm-8">
+    
+
+<!-- Icon Cards-->
+          <div class="row">
+            
+            <div class="col-xl-3 col-sm-6 mb-3">
+              <div class="card text-white bg-success o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fas fa-fw fa-list"></i>
+                  </div>
+                  <div class="mr-5">0 Tickets &lt; 30 days</div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="#">
+                  <span class="float-left">No tickets in this range</span>
+                  <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-sm-6 mb-3">
+              <div class="card text-white bg-success o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fas fa-fw fa-list"></i>
+                  </div>
+                  <div class="mr-5">0 Tickets 30 - 60 days</div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="#">
+                  <span class="float-left">No tickets in this range</span>
+                  <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <div class="col-xl-3 col-sm-6 mb-3">
+              <div class="card text-white bg-danger o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fas fa-fw fa-list"></i>
+                  </div>
+                  <div class="mr-5">58 Tickets &gt; 60 days</div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="/tickets/?sort=created&amp;date_from=&amp;date_to=2022-10-17&amp;status=1&amp;status=2&amp;status=3">
+                  <span class="float-left">View Tickets</span>
+                  <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+          </div>
+
+
+
+    </div>
+    <div class="col-sm-4">
+        <div class="alert alert-warning">
+            <p>Welcome to your Helpdesk Dashboard! From here you can quickly see tickets submitted by you, tickets you are working on, and those tickets that have no owner.</p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Open Tickets assigned to you (you are working on this ticket)
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+        <table class="table table-bordered table-sm table-striped" id="dataTable" width="100%" cellspacing="0">
+            <thead class="thead-light">
+                <tr>
+                    <th>Ticket</th>
+                    <th>Priority</th>
+                    <th>Queue</th>
+                    <th>Status</th>
+                    <th>Last Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <tr><td colspan='6'>You have no tickets assigned to you.</td></tr>
+                
+            </tbody>
+        </table>
+        </div>
+        <!-- /.table-responsive -->
+        
+    </div>
+    <div class="card-footer small text-muted">Listing 0 ticket(s).</div>
+</div>
+
+
+
+
+
+
+<div class="card mb-3">
+    <div class="card-header">
+        <i class="fas fa-table"></i>
+        Unassigned Tickets (pick up a ticket if you start to work on it)
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm table-striped" id="dataTable" width="100%" cellspacing="0">
+                <thead class="thead-light">
+                    <tr>
+                      <th>Ticket</th>
+                      <th>Priority</th>
+                      <th>Queue</th>
+                      <th>Created</th>
+                      <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/1/'>1. Some django-helpdesk Problem </a></td>
+                        <td>3</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='March 20, 2017, 4:52 a.m.'>5 years, 9 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/1/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/1/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/2/'>2. Something else </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='March 20, 2017, 4:54 a.m.'>5 years, 9 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/2/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/2/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/3/'>3. Something with an attachment </a></td>
+                        <td>1</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='March 20, 2017, 5:14 a.m.'>5 years, 9 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/3/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/3/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/4/'>4. wkcieffkpglfudprvinh </a></td>
+                        <td>1</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/4/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/4/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/6/'>6. mihupyfsalymbjmunqgv </a></td>
+                        <td>4</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/6/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/6/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/8/'>8. tyarwhlafrgkggakjkul </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/8/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/8/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/9/'>9. toopjctbvltidztfvkgg </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/9/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/9/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/10/'>10. ofpkybsixussxlpxnbqq </a></td>
+                        <td>3</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/10/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/10/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/11/'>11. xrvfoqpzezqrgrosnvrk </a></td>
+                        <td>4</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/11/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/11/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/16/'>16. pefkfcxcaoalgsaazoad </a></td>
+                        <td>3</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/16/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/16/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="warning">
+                        <td class="tickettitle"><a href='/tickets/17/'>17. apqfvpryvbyvkkyjeyzs </a></td>
+                        <td>2</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/17/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/17/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/18/'>18. zzyayrlgwpsmxpmsbxzy </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/18/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/18/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/20/'>20. bjfasegvlfeqhqffowee </a></td>
+                        <td>5</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/20/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/20/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/21/'>21. korgytgvnihpajzovvby </a></td>
+                        <td>1</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/21/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/21/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/23/'>23. gmjhinvfbshetihjaggx </a></td>
+                        <td>5</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/23/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/23/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/25/'>25. obmdddnkmlboprdrcuay </a></td>
+                        <td>5</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:13 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/25/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/25/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/26/'>26. gnqfwnlgenzmvcmibkjl </a></td>
+                        <td>5</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/26/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/26/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/28/'>28. ivudlyfcsjvuwlsjkchb </a></td>
+                        <td>1</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/28/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/28/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="warning">
+                        <td class="tickettitle"><a href='/tickets/30/'>30. fcafqassjqaosqsykfym </a></td>
+                        <td>2</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/30/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/30/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="warning">
+                        <td class="tickettitle"><a href='/tickets/31/'>31. dnlptprlcdyspeghkifi </a></td>
+                        <td>2</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/31/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/31/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="warning">
+                        <td class="tickettitle"><a href='/tickets/33/'>33. vkucfstlytqvdwqebija </a></td>
+                        <td>2</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/33/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/33/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/36/'>36. nibmajwnkibfegargypb </a></td>
+                        <td>5</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/36/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/36/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/37/'>37. fgsvhbkxwfimnypbhiqi </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/37/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/37/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/38/'>38. pehonnuhfmjuscjrqvtq </a></td>
+                        <td>3</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/38/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/38/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/40/'>40. xzqbpjkdrbnbkthutlja </a></td>
+                        <td>5</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/40/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/40/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/42/'>42. dyqngyjvcrinmnucrjle </a></td>
+                        <td>1</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/42/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/42/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/43/'>43. aaoyxshxyahpqkqfwxad </a></td>
+                        <td>3</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/43/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/43/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/45/'>45. zccqpgaxxjyjglyovsqm </a></td>
+                        <td>1</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/45/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/45/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/47/'>47. mjzqabahftwjolixzqzc </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/47/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/47/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/48/'>48. sxsmsaznlojsmtptskgl </a></td>
+                        <td>1</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/48/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/48/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/51/'>51. qjltaenmyouenkbkgxbw </a></td>
+                        <td>5</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/51/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/51/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/52/'>52. rrperuvaasrzreejwsyw </a></td>
+                        <td>5</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/52/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/52/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/53/'>53. pdeahuvcxbfqxdalquer </a></td>
+                        <td>1</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/53/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/53/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/55/'>55. njcvajnltszbfgwptjzp </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/55/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/55/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="danger">
+                        <td class="tickettitle"><a href='/tickets/57/'>57. dxroptnaqipivrndxlpt </a></td>
+                        <td>1</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/57/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/57/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/59/'>59. obxdijpjydunueezefcd </a></td>
+                        <td>4</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/59/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/59/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/61/'>61. bauhbfahlvexuhfufbqo </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/61/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/61/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/63/'>63. gmjpjoyvhkdlyejmltcu </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/63/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/63/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/64/'>64. gdlsbammdtkrxakgupbd </a></td>
+                        <td>4</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/64/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/64/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/65/'>65. jjavrjdoraivebfifsxj </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/65/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/65/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="success">
+                        <td class="tickettitle"><a href='/tickets/66/'>66. crnjynmxhathonxfyvxx </a></td>
+                        <td>5</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/66/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/66/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/67/'>67. obckwrmtfwsjurbctjet </a></td>
+                        <td>4</td>
+                        <td>Django Helpdesk</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/67/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/67/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                    <tr class="">
+                        <td class="tickettitle"><a href='/tickets/68/'>68. ynkynkeyyaymtwdmhoqk </a></td>
+                        <td>4</td>
+                        <td>Some Product</td>
+                        <td><span title='Aug. 16, 2021, 3:14 p.m.'>1 year, 4 months ago</span></td>
+                        <td class="text-center">
+                          <a href='/tickets/68/?take'><button class='btn btn-primary btn-sm'><i class="fas fa-hand-paper"></i>&nbsp;Take</button></a>
+                          <a href='/tickets/68/delete/?next=dashboard'><button class='btn btn-danger btn-sm'><i class="fas fa-trash"></i>&nbsp;Delete</button></a>
+                        </td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer small text-muted">Listing 43 ticket(s).</div>
+</div>
+
+
+
+
+
+
+
+            
+            </div>
+            <!-- /.container-fluid -->
+        
+            
+<!-- Sticky Footer -->
+<footer class="sticky-footer">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+          <span>Powered by <a href='https://github.com/django-helpdesk/django-helpdesk'>django-helpdesk</a>.</span>
+        </div>
+    </div>
+</footer>
+
+        </div>
+        <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+            
+
+
+    
+
+</body>
+</html>
+
+
